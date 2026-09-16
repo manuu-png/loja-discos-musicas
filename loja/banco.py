@@ -1,0 +1,261 @@
+from conexao_db import conexao, cursor
+
+
+def criar_tabela_usuarios():
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome VARCHAR(150) NOT NULL,
+            email VARCHAR(180) NOT NULL,
+            senha VARCHAR(90) NOT NULL
+        )
+    """)
+
+    conexao.commit()
+    print("Tabela usuarios criada com sucesso!")
+
+def inserir_usuarios():
+    usuarios = [
+        ('Ana Silva', 'ana.silva@exemplo.com', 'SenhaAna#2026'),
+        ('Bruno Souza', 'bruno.souza@exemplo.com', 'Brunn0*Secure'),
+        ('Carla Mendes', 'carla.mendes@exemplo.com', 'C@rlaMendes99'),
+        ('Daniel Oliveira', 'daniel.oliveira@exemplo.com', 'Dani#Oliveira1'),
+        ('Eduarda Santos', 'eduarda.santos@exemplo.com', 'Duda$2026Santos'),
+        ('Felipe Costa', 'felipe.costa@exemplo.com', 'F3lip3C0st@'),
+        ('Gabriela Lima', 'gabriela.lima@exemplo.com', 'Gabi#Lima!55'),
+        ('Henrique Almeida', 'henrique.almeida@exemplo.com', 'H3nr1qu3_A'),
+        ('Isabela Martins', 'isabela.martins@exemplo.com', 'IsaMartins*88'),
+        ('João Pedro', 'joao.pedro@exemplo.com', 'JoaoP@2026!')
+    ]
+
+    cursor.executemany("""
+        INSERT INTO usuarios (nome, email, senha)
+        VALUES (?, ?, ?)
+    """, usuarios)
+
+    conexao.commit()
+    print("Usuários inseridos com sucesso!")
+
+def criar_tabela_discos():
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS discos (
+            id_discos INTEGER PRIMARY KEY AUTOINCREMENT,
+            genero VARCHAR(50) NOT NULL,
+            artistas VARCHAR(100) NOT NULL,
+            ano INTEGER NOT NULL,
+            nome_musica VARCHAR(100) NOT NULL
+        )
+    """)
+
+    conexao.commit()
+    print("Tabela discos criada com sucesso!")
+
+def inserir_discos():
+    discos = [
+        ('Rock Clássico', 'The Smiths', 1986, 'There Is a Light That Never Goes Out'),
+        ('Rock Clássico', 'The Beatles', 1969, "Don't Let Me Down"),
+        ('Rock Clássico', 'Oasis', 1995, 'Wonderwall'),
+        ('Rock Clássico', 'Queen & David Bowie', 1981, 'Under Pressure'),
+        ('Rock Clássico', 'She & Him', 2008, 'I Thought I Saw Your Face Today'),
+        ('Rock Clássico', 'Jeff Buckley', 2004, 'Forget Her'),
+        ('Rock Clássico', 'The Police', 1983, 'Every Breath You Take'),
+        ('Rock Clássico', 'The Smiths', 1987, 'Half a Person'),
+        ('Rock Clássico', 'The Beatles', 1969, 'Oh! Darling'),
+        ('Rock Clássico', 'The Beatles', 1968, 'Hey Jude'),
+
+        ('Rock Metal', 'Mötley Crüe', 1989, 'Kickstart My Heart'),
+        ('Rock Metal', "Guns N' Roses", 1987, 'Paradise City'),
+        ('Rock Metal', 'Nirvana', 1991, 'Lithium'),
+        ('Rock Metal', 'Metallica', 1986, 'Master of Puppets'),
+        ('Rock Metal', 'AC/DC', 1980, 'Back in Black'),
+        ('Rock Metal', 'Deftones', 2000, 'Change (In the House of Flies)'),
+        ('Rock Metal', "Guns N' Roses", 1987, "Sweet Child O' Mine"),
+        ('Rock Metal', 'Metallica', 1991, 'Enter Sandman'),
+        ('Rock Metal', 'Nirvana', 1993, 'Heart-Shaped Box'),
+        ('Rock Metal', 'AC/DC', 1979, 'Highway to Hell'),
+
+        ('MPB', 'Marisa Monte', 2011, 'Ainda Bem'),
+        ('MPB', 'Gal Costa', 1969, 'Baby'),
+        ('MPB', 'Rita Lee', 1980, 'Lança Perfume'),
+        ('MPB', 'Djavan', 1989, 'Oceano'),
+        ('MPB', 'Jorge Ben Jor', 1963, 'Mas Que Nada'),
+        ('MPB', 'Tribalistas', 2002, 'Velha Infância'),
+        ('MPB', 'Marisa Monte', 1991, 'Beija Eu'),
+        ('MPB', 'Gal Costa', 1998, 'Lanterna dos Afogados'),
+        ('MPB', 'Rita Lee', 1979, 'Mania de Você'),
+        ('MPB', 'Jorge Ben Jor', 1972, 'Taj Mahal'),
+
+        ('Pop', 'Taylor Swift', 2008, 'The Way I Loved You'),
+        ('Pop', 'Taylor Swift', 2012, 'Red'),
+        ('Pop', 'Taylor Swift', 2020, 'Champagne Problems'),
+        ('Pop', 'Taylor Swift', 2014, 'New Romantics'),
+        ('Pop', 'Olivia Rodrigo', 2021, 'Drivers License'),
+        ('Pop', 'Ariana Grande', 2018, 'Thank U, Next'),
+        ('Pop', 'Harry Styles', 2022, 'As It Was'),
+        ('Pop', 'One Direction', 2011, 'What Makes You Beautiful'),
+        ('Pop', 'Justin Bieber', 2010, 'Baby'),
+        ('Pop', 'Olivia Rodrigo', 2021, 'Good 4 U'),
+
+        ('K-Pop', 'BTS', 2020, 'Dynamite'),
+        ('K-Pop', 'BLACKPINK', 2018, 'DDU-DU DDU-DU'),
+        ('K-Pop', 'NewJeans', 2022, 'Hype Boy'),
+        ('K-Pop', 'TWICE', 2019, 'Fancy'),
+        ('K-Pop', 'Enhypen', 2021, 'Fever'),
+        ('K-Pop', 'BTS', 2021, 'Butter'),
+        ('K-Pop', 'BLACKPINK', 2020, 'How You Like That'),
+        ('K-Pop', 'NewJeans', 2022, 'Ditto'),
+        ('K-Pop', 'TWICE', 2018, 'What Is Love?'),
+        ('K-Pop', 'Enhypen', 2023, 'Bite Me')
+    ]
+
+    cursor.executemany("""
+        INSERT INTO discos (genero, artistas, ano, nome_musica)
+        VALUES (?, ?, ?, ?)
+    """, discos)
+
+    conexao.commit()
+    print("Discos inseridos com sucesso!")
+
+
+def criar_tabela_artistas():
+    cursor.execute("""
+           CREATE TABLE IF NOT EXISTS artistas (
+            id_artistas INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome VARCHAR(100) NOT NULL,
+            idade NUMERIC NOT NULL
+        )
+    """)
+
+    conexao.commit()
+    print("Tabela artistas criada com sucesso!")
+
+def inserir_artistas():
+    artistas = [
+        ('The Smiths', 44),
+        ('The Beatles', 66),
+        ('Oasis', 35),
+        ('Queen', 56),
+        ('David Bowie', 79),
+        ('She & Him', 20),
+        ('Jeff Buckley', 60),
+        ('The Police', 49),
+        ('Mötley Crüe', 45),
+        ("Guns N' Roses", 41),
+        ('Nirvana', 39),
+        ('Metallica', 45),
+        ('AC/DC', 53),
+        ('Deftones', 38),
+        ('Marisa Monte', 59),
+        ('Gal Costa', 81),
+        ('Rita Lee', 79),
+        ('Djavan', 77),
+        ('Jorge Ben Jor', 81),
+        ('Tribalistas', 25),
+        ('Taylor Swift', 36),
+        ('Olivia Rodrigo', 23),
+        ('Ariana Grande', 33),
+        ('Harry Styles', 32),
+        ('One Direction', 16),
+        ('Justin Bieber', 32),
+        ('BTS', 13),
+        ('BLACKPINK', 10),
+        ('NewJeans', 4),
+        ('TWICE', 11),
+        ('Enhypen', 6)
+    ]
+
+    cursor.executemany("""
+        INSERT INTO artistas (nome, idade)
+        VALUES (?, ?)
+    """, artistas)
+
+    conexao.commit()
+    print("Artistas inseridos com sucesso!")
+
+
+def criar_tabela_generos():
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS generos (
+            id_generos INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome VARCHAR(100) NOT NULL,
+            qtde_discos NUMERIC NOT NULL
+        )
+    """)
+
+    conexao.commit()
+    print("Tabela generos criada com sucesso!")
+
+def inserir_generos():
+        generos = [
+            ('Rock Clássico', 10),
+            ('Rock Metal', 10),
+            ('MPB', 10),
+            ('Pop', 10),
+            ('K-Pop', 10),
+            ('Sertanejo', 10)
+        ]
+
+        cursor.executemany("""
+            INSERT INTO generos (nome, qtde_discos)
+            VALUES (?, ?)
+        """, generos)
+
+        conexao.commit()
+        print("Gêneros inseridos com sucesso!")
+
+
+def criar_tabela_pedidos():
+    cursor.execute("""
+           CREATE TABLE IF NOT EXISTS pedidos (
+               id_pedidos INTEGER PRIMARY KEY AUTOINCREMENT,
+               id_usuario INTEGER NOT NULL,
+               quantidade NUMERIC NOT NULL,
+               endereco VARCHAR(250) NOT NULL,
+               preco DECIMAL NOT NULL,
+
+               FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+           )
+       """)
+
+    conexao.commit()
+    print("Tabela pedidos criada com sucesso!")
+
+def inserir_pedidos():
+    pedidos = [
+        (2, 'Rua das Flores, 123, São Paulo - SP', 89.90, 1),
+        (1, 'Av. Paulista, 1000, São Paulo - SP', 45.50, 2),
+        (4, 'Rua XV de Novembro, 45, Curitiba - PR', 180.00, 3),
+        (3, 'Av. Rio Branco, 500, Rio de Janeiro - RJ', 120.75, 4),
+        (1, 'Rua da Bahia, 300, Belo Horizonte - MG', 59.90, 5),
+        (5, 'Rua 24 de Outubro, 88, Porto Alegre - RS', 225.00, 6),
+        (2, 'Av. Beira Mar, 1500, Florianópolis - SC', 95.00, 7),
+        (6, 'Rua Dom Pedro II, 77, Salvador - BA', 270.50, 8),
+        (1, 'Av. Afonso Pena, 1200, Campo Grande - MS', 49.99, 9),
+        (3, 'Rua Sete de Setembro, 400, Vitória - ES', 135.00, 10)
+    ]
+
+    cursor.executemany("""
+        INSERT INTO pedidos (quantidade, endereco, preco, id_usuario)
+        VALUES (?, ?, ?, ?)
+    """, pedidos)
+
+    conexao.commit()
+    print("Pedidos inseridos com sucesso!")
+
+
+criar_tabela_usuarios()
+criar_tabela_discos()
+criar_tabela_artistas()
+criar_tabela_generos()
+criar_tabela_pedidos()
+
+
+inserir_usuarios()
+inserir_discos()
+inserir_artistas()
+inserir_generos()
+inserir_pedidos()
+
+
+conexao.close()
+
