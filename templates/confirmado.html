@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Sucesso</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <div class="container" style="text-align: center; margin-top: 100px;">
+        <h1 style="color: #00b37e; margin-bottom: 20px;">🎵 Seu pedido foi reservado com sucesso! 🎵</h1>
+        <p style="margin-bottom: 25px; color: #a8a8b3;">O entregador vai levar ao seu endereço em no máximo **48 horas**. O pedido já foi anexado à sua conta na loja.</p>
+        <a href="{{ url_for('catalogo') }}" class="btn">Voltar ao Catálogo</a>
+        <a href="{{ url_for('pedidos') }}" class="btn" style="background-color: #29292e; margin-left: 10px;">Ver Meus Pedidos</a>
+    </div>
+</body>
+</html>

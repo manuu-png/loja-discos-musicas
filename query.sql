@@ -1,9 +1,9 @@
 SELECT * FROM usuarios;
 
 UPDATE usuarios 
-SET nome = 'Sarah Muniz', 
-    email = 'Sarahmza@gmail.com', 
-    senha = '30112009'
+SET nome = 'Luiza Terto Da Silva', 
+    email = 'tertoluiza@gmail.com', 
+    senha = '310708Lu'
 WHERE id_usuario = 1;
 
 SELECT * FROM discos;

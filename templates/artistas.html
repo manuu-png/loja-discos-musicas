@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Artistas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Opera Records</h1>
+        <nav>
+            <span style="color: #fff;">Olá, {{ nome }}</span>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('artistas') }}">Artistas</a>
+            <a href="{{ url_for('generos') }}">Gêneros</a>
+            <a href="{{ url_for('pedidos') }}">Meus Pedidos</a>
+            <a href="{{ url_for('logout') }}" style="color: #f75a68;">Sair</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Artistas Cadastrados</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome do Artista</th>
+                    <th>Idade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in artistas %}
+                <tr>
+                    <td>{{ a[0] }}</td>
+                    <td>{{ a[1] }}</td>
+                    <td>{{ a[2] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

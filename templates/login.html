@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <div class="container" style="max-width: 400px; margin-top: 100px;">
+        <h1>Opera Records</h1>
+        <p style="margin-bottom: 20px; color: #a8a8b3;">Faça login para entrar na loja</p>
+
+        {% if erro %}
+            <p style="color: #f75a68; margin-bottom: 10px;">{{ erro }}</p>
+        {% endif %}
+
+        <form method="POST">
+            <label>E-mail:</label>
+            <input type="email" name="email" required>
+
+            <label>Senha:</label>
+            <input type="password" name="senha" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+        <p style="margin-top: 15px; text-align: center;">Não tem uma conta? <a href="{{ url_for('cadastro') }}">Criar conta</a></p>
+    </div>
+</body>
+</html>

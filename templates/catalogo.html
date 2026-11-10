@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Catálogo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Opera Records</h1>
+        <nav>
+            <span style="color: var(--vinho-escuro); font-weight: bold;">Olá, {{ nome }}</span>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('ver_carrinho') }}">Carrinho</a>
+            <a href="{{ url_for('artistas') }}">Artistas</a>
+            <a href="{{ url_for('generos') }}">Gêneros</a>
+            <a href="{{ url_for('pedidos') }}">Meus Pedidos</a>
+            <a href="{{ url_for('logout') }}" style="color: #8b0000;">Sair</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 2px; color: #4a284e; margin-bottom: 10px; font-weight: bold;">
+            <span>CAMILA E EMANUELLE</span>
+            <span>LOJA DE DISCOS DE VINIL</span>
+        </div>
+        <h2>Catálogo de Discos</h2>
+
+        <div class="catalogo-grid">
+            {% for d in discos %}
+            <div class="disco-card">
+                <div>
+                    <!-- Vitrine com Capa do Álbum e Vinil saindo para fora -->
+                    <div class="produto-vitrine">
+                        <div class="capa-album">
+                            <!-- Se o link falhar, o onerror carrega uma imagem de vinil padrão para nunca quebrar a tela -->
+                            <img src="{{ d.imagem }}" alt="{{ d.musica }}" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/b/b6/12in-Vinyl-LP-Record-Angle.jpg';">
+                        </div>
+                        <div class="disco-vinil"></div>
+                    </div>
+
+                    <div class="disco-info">
+                        <h3>{{ d.musica }}</h3>
+                        <p>{{ d.artista }} · {{ d.genero }} · {{ d.ano }}</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="disco-preco">R$ {{ "%.2f"|format(d.preco) }}</div>
+                    <form action="{{ url_for('adicionar_carrinho', id_disco=d.id) }}" method="POST">
+                        <button type="submit" class="btn" style="width: 100%;">Comprar</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

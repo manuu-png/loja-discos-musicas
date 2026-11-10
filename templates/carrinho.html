@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Carrinho</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Opera Records</h1>
+        <nav>
+            <span style="color: var(--vinho-escuro); font-weight: bold;">Olá, {{ nome }}</span>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('ver_carrinho') }}">Carrinho</a>
+            <a href="{{ url_for('artistas') }}">Artistas</a>
+            <a href="{{ url_for('generos') }}">Gêneros</a>
+            <a href="{{ url_for('pedidos') }}">Meus Pedidos</a>
+            <a href="{{ url_for('logout') }}" style="color: #8b0000;">Sair</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 2px; color: #4a284e; margin-bottom: 10px; font-weight: bold;">
+            <span>CAMILA E EMANUELLE</span>
+            <span>CARRINHO DE COMPRAS</span>
+        </div>
+        <h2>Seus Discos Selecionados</h2>
+
+        {% if carrinho %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Álbum / Música</th>
+                    <th>Artista</th>
+                    <th>Qtd</th>
+                    <th>Preço Un.</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in carrinho %}
+                <tr>
+                    <td>{{ item.musica }}</td>
+                    <td>{{ item.artista }}</td>
+                    <td>{{ item.quantidade }}x</td>
+                    <td>R$ {{ "%.2f"|format(item.preco) }}</td>
+                    <td>R$ {{ "%.2f"|format(item.subtotal) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div style="margin-top: 25px; text-align: right; border-top: 2px dashed var(--vinho-escuro); padding-top: 15px;">
+            <p><strong>Subtotal dos Discos:</strong> R$ {{ "%.2f"|format(total) }}</p>
+            <p><strong>Taxa do Entregador (Chega em até 48h):</strong> R$ 5,00</p>
+            <h3 style="margin-top: 10px; color: var(--vinho-escuro);">TOTAL GERAL: R$ {{ "%.2f"|format(total_com_taxa) }}</h3>
+        </div>
+
+        <div style="margin-top: 30px; background: var(--roxo-claro); padding: 20px; border-radius: 6px; border: 2px solid var(--vinho-escuro);">
+            <h3 style="margin-bottom: 15px; color: var(--vinho-escuro);">Finalizar Endereço e Pagamento</h3>
+            <form action="{{ url_for('finalizar_carrinho') }}" method="POST">
+                <label>Endereço Completo de Entrega:</label>
+                <input type="text" name="endereco" placeholder="Rua, Número, Bairro, Cidade - UF" required>
+
+                <label>Forma de Pagamento:</label>
+                <select name="pagamento" id="forma-pagamento" onchange="mostrarQrCode()" required>
+                    <option value="">Selecione...</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão">Cartão (com o entregador)</option>
+                    <option value="Dinheiro">Dinheiro (com o entregador)</option>
+                </select>
+
+                <!-- Div do QR Code do Pix (Fica oculta por padrão e aparece ao selecionar Pix) -->
+                <div id="qr-code-container" style="display: none; text-align: center; margin: 20px 0; background: #fff; padding: 15px; border-radius: 6px; border: 2px solid var(--vinho-escuro);">
+                    <p style="margin-bottom: 10px; font-weight: bold; color: var(--vinho-escuro);">Escaneie o QR Code abaixo para pagar via Pix:</p>
+                    <img src="{{ url_for('static', filename='imagens/qrcode_pix.png') }}" alt="QR Code Pix" style="max-width: 180px; height: auto; border: 1px solid #ccc;">
+                </div>
+
+                <button type="submit" style="width: 100%; margin-top: 10px;">Confirmar Reserva</button>
+            </form>
+        </div>
+        {% else %}
+        <p style="text-align: center; margin: 30px 0;">O seu carrinho está vazio.</p>
+        <div style="text-align: center;">
+            <a href="{{ url_for('catalogo') }}" class="btn">Voltar ao Catálogo</a>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Script para exibir o QR Code do Pix dinamicamente -->
+    <script>
+        function mostrarQrCode() {
+            var select = document.getElementById("forma-pagamento");
+            var qrDiv = document.getElementById("qr-code-container");
+            if (select.value === "Pix") {
+                qrDiv.style.display = "block";
+            } else {
+                qrDiv.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

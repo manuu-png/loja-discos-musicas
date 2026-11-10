@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Gêneros</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Opera Records</h1>
+        <nav>
+            <span style="color: var(--vinho-escuro); font-weight: bold;">Olá, {{ nome }}</span>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('ver_carrinho') }}">Carrinho</a>
+            <a href="{{ url_for('artistas') }}">Artistas</a>
+            <a href="{{ url_for('generos') }}">Gêneros</a>
+            <a href="{{ url_for('pedidos') }}">Meus Pedidos</a>
+            <a href="{{ url_for('logout') }}" style="color: #8b0000;">Sair</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 2px; color: #4a284e; margin-bottom: 10px; font-weight: bold;">
+            <span>CAMILA E EMANUELLE</span>
+            <span>GÊNEROS MUSICAIS</span>
+        </div>
+        <h2>Gêneros Musicais Disponíveis</h2>
+
+        {% if generos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome do Gênero</th>
+                    <th>Quantidade de Discos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for g in generos %}
+                <tr>
+                    <td>{{ g[0] }}</td>
+                    <td>{{ g[1] }}</td>
+                    <td>{{ g[2] }} discos</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center; margin: 30px 0;">Nenhum gênero cadastrado.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

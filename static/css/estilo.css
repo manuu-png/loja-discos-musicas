@@ -1,0 +1,205 @@
+@font-face {
+    font-family: 'Chapaza';
+    src: url('../fonts/chapaza.ttf') format('truetype');
+}
+
+:root {
+    --vinho-escuro: #4a284e;
+    --roxo-fundo: #c9a7d8;
+    --roxo-claro: #ebd6f5;
+    --texto-escuro: #2b1630;
+    --branco-suave: #fcf9fc;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Chapaza', serif, Arial;
+}
+
+body {
+    background-color: var(--roxo-fundo);
+    background-image: radial-gradient(var(--vinho-escuro) 15%, transparent 16%),
+                      radial-gradient(var(--vinho-escuro) 15%, transparent 16%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+    color: var(--texto-escuro);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: var(--branco-suave);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px solid var(--vinho-escuro);
+    box-shadow: 0 4px 15px rgba(42, 22, 48, 0.3);
+}
+
+header h1 {
+    color: var(--vinho-escuro);
+    font-size: 30px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+nav a {
+    color: var(--vinho-escuro);
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 35px;
+    background: var(--branco-suave);
+    border: 3px solid var(--vinho-escuro);
+    border-radius: 8px;
+    box-shadow: 6px 6px 0px var(--vinho-escuro);
+    width: 90%;
+}
+
+h2 {
+    margin-bottom: 20px;
+    color: var(--vinho-escuro);
+    font-size: 24px;
+    border-bottom: 2px dashed var(--vinho-escuro);
+    padding-bottom: 8px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    background: var(--roxo-claro);
+    border: 2px solid var(--vinho-escuro);
+    color: var(--texto-escuro);
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button, .btn {
+    background-color: var(--vinho-escuro);
+    color: var(--branco-suave);
+    padding: 10px 20px;
+    border: 2px solid var(--vinho-escuro);
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button:hover, .btn:hover {
+    background-color: #633868;
+}
+
+/* Vitrine de Discos com o disco saindo para fora da capa */
+.catalogo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.disco-card {
+    background: var(--roxo-claro);
+    border: 2px solid var(--vinho-escuro);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 4px 4px 0px var(--vinho-escuro);
+}
+
+.produto-vitrine {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 15px;
+    height: 130px;
+}
+
+.capa-album {
+    width: 120px;
+    height: 120px;
+    border: 2px solid var(--vinho-escuro);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background: #000;
+}
+
+.capa-album img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.disco-vinil {
+    width: 110px;
+    height: 110px;
+    background: #111;
+    border-radius: 50%;
+    position: absolute;
+    left: 70px;
+    z-index: 1;
+    border: 3px solid #333;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background-image: radial-gradient(circle, #444 10%, #111 11%, #111 20%, #222 21%, #111 30%);
+}
+
+.disco-info h3 {
+    font-size: 15px;
+    color: var(--vinho-escuro);
+    margin-bottom: 4px;
+}
+
+.disco-info p {
+    font-size: 13px;
+    color: var(--texto-escuro);
+}
+
+.disco-preco {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--vinho-escuro);
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--vinho-escuro);
+}
+
+th {
+    color: var(--branco-suave);
+    background-color: var(--vinho-escuro);
+}

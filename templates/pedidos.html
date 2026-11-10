@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Opera Records - Pedidos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Opera Records</h1>
+        <nav>
+            <span style="color: #fff;">Olá, {{ nome }}</span>
+            <a href="{{ url_for('catalogo') }}">Catálogo</a>
+            <a href="{{ url_for('artistas') }}">Artistas</a>
+            <a href="{{ url_for('generos') }}">Gêneros</a>
+            <a href="{{ url_for('pedidos') }}">Meus Pedidos</a>
+            <a href="{{ url_for('logout') }}" style="color: #f75a68;">Sair</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>Histórico de Pedidos</h2>
+        {% if pedidos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Quantidade</th>
+                    <th>Endereço e Pagamento</th>
+                    <th>Preço Total (com taxa)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pedidos %}
+                <tr>
+                    <td>{{ p[0] }}x</td>
+                    <td>{{ p[1] }}</td>
+                    <td>R$ {{ "%.2f"|format(p[2]) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3 style="margin-top: 20px; text-align: right;">TOTAL GASTO: R$ {{ "%.2f"|format(total_gasto) }}</h3>
+        {% else %}
+        <p>Você ainda não realizou nenhum pedido.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
