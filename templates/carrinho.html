@@ -7,7 +7,7 @@
     <style>
         .caixa-localizacao {
             background-color: #f0f8ff;
-            border: 1px solid #b0e0e6;
+            border: 1px solid #f7c1fd;
             padding: 8px;
             border-radius: 5px;
             margin-top: 5px;
@@ -15,10 +15,9 @@
             font-size: 13px;
             color: #333;
         }
-        /* Estilo para a área do QR Code do Pix */
         #area-pix {
-            background-color: #f9f9f9;
-            border: 1px dashed #ccc;
+            background-color: #faf5fd;
+            border: 1px dashed #cfb0ea;
             padding: 15px;
             text-align: center;
             margin-top: 15px;
@@ -29,6 +28,10 @@
             width: 150px;
             height: 150px;
             margin-top: 10px;
+        }
+        .linha-dupla {
+            display: flex;
+            gap: 10px;
         }
     </style>
 </head>
@@ -73,28 +76,42 @@
             </tbody>
         </table>
 
+        <!-- Valores e Mensagem de Entrega -->
         <div style="text-align: right; margin-top: 15px;">
             <p>Subtotal dos Discos: R$ {{ "%.2f"|format(total) }}</p>
-            <p>Taxa do Entregador (Chega em até 48h): R$ 5,00</p>
+            <p>Taxa do Entregador: R$ 5,00</p>
+            <p style="color: #271a80; font-weight: bold; margin-top: 5px;">📦 Taxa do entregador inclusa. Vai chegar no máximo em **48 horas**.</p>
             <h3>TOTAL GERAL: R$ {{ "%.2f"|format(total_com_taxa) }}</h3>
         </div>
 
         <!-- Formulário de Finalização -->
-        <form action="{{ url_for('finalizar_carrinho') }}" method="POST" style="margin-top: 30px; background: #fdf8f5; padding: 20px; border-radius: 8px; border: 1px solid #cfb0ea;">
+        <form action="{{ url_for('finalizar_carrinho') }}" method="POST" style="margin-top: 30px; background: #eee4f8; padding: 20px; border-radius: 8px; border: 1px solid #d0acf1;">
             <h3>Finalizar Endereço e Pagamento</h3>
 
             <!-- Campo de CEP -->
             <label style="display: block; margin-top: 10px; font-weight: bold;">Digite o CEP:</label>
-            <input oninput="buscarLocalizacao(this.value)" id="cep" type="text" placeholder="Ex: 01001000" maxlength="8" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
+            <input oninput="atualizarEndereco()" id="cep" type="text" placeholder="Ex: 01001000" maxlength="8" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
 
             <!-- Onde aparece a localização exata detectada -->
             <div id="resultado-localizacao" class="caixa-localizacao" style="display: none;">
-                📍 <strong>Localização detectada:</strong> <span id="texto-localizacao"></span>
+                 <strong>Localização detectada:</strong> <span id="texto-localizacao"></span>
             </div>
 
-            <!-- Endereço Completo -->
-            <label style="display: block; margin-top: 10px; font-weight: bold;">Endereço Completo de Entrega:</label>
-            <input type="text" id="endereco" name="endereco" placeholder="Rua, Número, Bairro, Cidade - UF" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
+            <!-- Linha dividida para Rua/Logradouro e Número/Apartamento -->
+            <div class="linha-dupla">
+                <div style="flex: 3;">
+                    <label style="display: block; margin-top: 10px; font-weight: bold;">Rua / Logradouro:</label>
+                    <input type="text" id="logradouro" placeholder="Preenchido pelo CEP" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" readonly>
+                </div>
+                <div style="flex: 1;">
+                    <label style="display: block; margin-top: 10px; font-weight: bold;">Nº / Apto:</label>
+                    <input type="text" id="numero" placeholder="Ex: 123" oninput="atualizarEndereco()" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
+                </div>
+            </div>
+
+            <!-- Campo de Endereço unificado que vai de fato para o Python (escondido ou visível conforme preferir) -->
+            <label style="display: block; margin-top: 10px; font-weight: bold;">Endereço Completo Final:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="O endereço completo será gerado aqui" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; background-color: #e9d1f4;" required readonly>
 
             <!-- Forma de Pagamento -->
             <label style="display: block; margin-top: 10px; font-weight: bold;">Forma de Pagamento:</label>
@@ -105,11 +122,9 @@
                 <option value="Dinheiro">Dinheiro</option>
             </select>
 
-            <!-- Área que exibe a foto do QR Code do Pix caso o usuário escolha Pix -->
+            <!-- Área da foto do Pix -->
             <div id="area-pix">
                 <p><strong>Escaneie o QR Code abaixo para pagar com Pix:</strong></p>
-                <!-- Exemplo de imagem de QR Code (você pode substituir pelo link da imagem de vocês) -->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=OperaRecordsPixFicticio" alt="QR Code Pix">
                 <p style="font-size: 12px; color: #666; margin-top: 5px;">Chave Pix: operarecords@email.com</p>
             </div>
@@ -120,45 +135,54 @@
 
     <!-- Scripts JavaScript -->
     <script>
-        // Função para buscar o CEP e preencher o endereço
-        function buscarLocalizacao(valorCep) {
-            const cepLimpo = valorCep.replace(/\D/g, '');
+        let dadosCepGlobais = null;
+
+        function atualizarEndereco() {
+            const cepInput = document.getElementById('cep').value.replace(/\D/g, '');
+            const numeroInput = document.getElementById('numero').value;
             const enderecoInput = document.getElementById('endereco');
             const divLocalizacao = document.getElementById('resultado-localizacao');
             const textoLocalizacao = document.getElementById('texto-localizacao');
+            const logradouroInput = document.getElementById('logradouro');
 
-            if (cepLimpo.length === 8) {
-                divLocalizacao.style.display = "block";
-                textoLocalizacao.innerText = "Buscando localização...";
-                enderecoInput.value = "Buscando endereço...";
+            if (cepInput.length === 8) {
+                if (!dadosCepGlobais) {
+                    divLocalizacao.style.display = "block";
+                    textoLocalizacao.innerText = "Buscando localização...";
 
-                const url = `https://viacep.com.br/ws/${cepLimpo}/json/`;
+                    const url = `https://viacep.com.br/ws/${cepInput}/json/`;
 
-                fetch(url)
-                    .then(response => response.json())
-                    .then(dados => {
-                        if (!dados.erro) {
-                            textoLocalizacao.innerText = `${dados.localidade} - ${dados.uf} (${dados.bairro})`;
-                            enderecoInput.value = `${dados.logradouro}, Bairro: ${dados.bairro}, ${dados.localidade} - ${dados.uf} (CEP: ${dados.cep})`;
-                        } else {
-                            divLocalizacao.style.display = "block";
-                            textoLocalizacao.innerText = "CEP não encontrado.";
-                            enderecoInput.value = "";
-                        }
-                    })
-                    .catch(erro => {
-                        console.error("Erro ao buscar CEP:", erro);
-                        divLocalizacao.style.display = "block";
-                        textoLocalizacao.innerText = "Erro ao buscar os dados.";
-                        enderecoInput.value = "";
-                    });
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(dados => {
+                            if (!dados.erro) {
+                                dadosCepGlobais = dados;
+                                textoLocalizacao.innerText = `${dados.localidade} - ${dados.uf} (${dados.bairro})`;
+                                logradouroInput.value = dados.logradouro;
+
+                                // Monta o endereço final com o número digitado
+                                enderecoInput.value = `${dados.logradouro}, Nº ${numeroInput}, Bairro: ${dados.bairro}, ${dados.localidade} - ${dados.uf} (CEP: ${dados.cep})`;
+                            } else {
+                                divLocalizacao.style.display = "block";
+                                textoLocalizacao.innerText = "CEP não encontrado.";
+                            }
+                        })
+                        .catch(erro => {
+                            console.error("Erro ao buscar CEP:", erro);
+                        });
+                } else {
+                    // Se já temos os dados do CEP, apenas atualiza o número no campo final
+                    const d = dadosCepGlobais;
+                    enderecoInput.value = `${d.logradouro}, Nº ${numeroInput}, Bairro: ${d.bairro}, ${d.localidade} - ${d.uf} (CEP: ${d.cep})`;
+                }
             } else {
+                dadosCepGlobais = null;
                 divLocalizacao.style.display = "none";
+                logradouroInput.value = "";
                 enderecoInput.value = "";
             }
         }
 
-        // Função para mostrar ou esconder o QR Code do Pix dependendo da escolha
         function verificarPagamento(opcao) {
             const areaPix = document.getElementById('area-pix');
             if (opcao === "Pix") {
