@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Opera Records - Artistas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+
+    <!-- 1. Adicione o CSS do DataTables aqui no <head> -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
 </head>
 <body>
     <header>
@@ -20,7 +23,9 @@
 
     <div class="container">
         <h2>Artistas Cadastrados</h2>
-        <table>
+
+        <!-- 2. Adicione um ID na sua tabela (ex: id="tabelaArtistas") -->
+        <table id="tabelaArtistas" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -39,5 +44,20 @@
             </tbody>
         </table>
     </div>
+
+    <!-- 3. Adicione o jQuery e o JS do DataTables antes de fechar o body -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+
+    <!-- 4. Inicialize o DataTables traduzido para Português -->
+    <script>
+        $(document).ready(function () {
+            $('#tabelaArtistas').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.13.8/i18n/pt-BR.json"
+                }
+            });
+        });
+    </script>
 </body>
 </html>

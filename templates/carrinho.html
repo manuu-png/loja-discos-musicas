@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <title>Opera Records - Carrinho</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <style>
+        .caixa-localizacao {
+            background-color: #f0f8ff;
+            border: 1px solid #b0e0e6;
+            padding: 8px;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #333;
+        }
+        /* Estilo para a área do QR Code do Pix */
+        #area-pix {
+            background-color: #f9f9f9;
+            border: 1px dashed #ccc;
+            padding: 15px;
+            text-align: center;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        #area-pix img {
+            width: 150px;
+            height: 150px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -20,13 +47,9 @@
     </header>
 
     <div class="container">
-        <div style="display: flex; justify-content: space-between; font-size: 11px; letter-spacing: 2px; color: #4a284e; margin-bottom: 10px; font-weight: bold;">
-            <span>CAMILA E EMANUELLE</span>
-            <span>CARRINHO DE COMPRAS</span>
-        </div>
         <h2>Seus Discos Selecionados</h2>
 
-        {% if carrinho %}
+        <!-- Tabela do Carrinho -->
         <table>
             <thead>
                 <tr>
@@ -50,52 +73,98 @@
             </tbody>
         </table>
 
-        <div style="margin-top: 25px; text-align: right; border-top: 2px dashed var(--vinho-escuro); padding-top: 15px;">
-            <p><strong>Subtotal dos Discos:</strong> R$ {{ "%.2f"|format(total) }}</p>
-            <p><strong>Taxa do Entregador (Chega em até 48h):</strong> R$ 5,00</p>
-            <h3 style="margin-top: 10px; color: var(--vinho-escuro);">TOTAL GERAL: R$ {{ "%.2f"|format(total_com_taxa) }}</h3>
+        <div style="text-align: right; margin-top: 15px;">
+            <p>Subtotal dos Discos: R$ {{ "%.2f"|format(total) }}</p>
+            <p>Taxa do Entregador (Chega em até 48h): R$ 5,00</p>
+            <h3>TOTAL GERAL: R$ {{ "%.2f"|format(total_com_taxa) }}</h3>
         </div>
 
-        <div style="margin-top: 30px; background: var(--roxo-claro); padding: 20px; border-radius: 6px; border: 2px solid var(--vinho-escuro);">
-            <h3 style="margin-bottom: 15px; color: var(--vinho-escuro);">Finalizar Endereço e Pagamento</h3>
-            <form action="{{ url_for('finalizar_carrinho') }}" method="POST">
-                <label>Endereço Completo de Entrega:</label>
-                <input type="text" name="endereco" placeholder="Rua, Número, Bairro, Cidade - UF" required>
+        <!-- Formulário de Finalização -->
+        <form action="{{ url_for('finalizar_carrinho') }}" method="POST" style="margin-top: 30px; background: #fdf8f5; padding: 20px; border-radius: 8px; border: 1px solid #cfb0ea;">
+            <h3>Finalizar Endereço e Pagamento</h3>
 
-                <label>Forma de Pagamento:</label>
-                <select name="pagamento" id="forma-pagamento" onchange="mostrarQrCode()" required>
-                    <option value="">Selecione...</option>
-                    <option value="Pix">Pix</option>
-                    <option value="Cartão">Cartão (com o entregador)</option>
-                    <option value="Dinheiro">Dinheiro (com o entregador)</option>
-                </select>
+            <!-- Campo de CEP -->
+            <label style="display: block; margin-top: 10px; font-weight: bold;">Digite o CEP:</label>
+            <input oninput="buscarLocalizacao(this.value)" id="cep" type="text" placeholder="Ex: 01001000" maxlength="8" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
 
-                <!-- Div do QR Code do Pix (Fica oculta por padrão e aparece ao selecionar Pix) -->
-                <div id="qr-code-container" style="display: none; text-align: center; margin: 20px 0; background: #fff; padding: 15px; border-radius: 6px; border: 2px solid var(--vinho-escuro);">
-                    <p style="margin-bottom: 10px; font-weight: bold; color: var(--vinho-escuro);">Escaneie o QR Code abaixo para pagar via Pix:</p>
-                    <img src="{{ url_for('static', filename='imagens/qrcode_pix.png') }}" alt="QR Code Pix" style="max-width: 180px; height: auto; border: 1px solid #ccc;">
-                </div>
+            <!-- Onde aparece a localização exata detectada -->
+            <div id="resultado-localizacao" class="caixa-localizacao" style="display: none;">
+                📍 <strong>Localização detectada:</strong> <span id="texto-localizacao"></span>
+            </div>
 
-                <button type="submit" style="width: 100%; margin-top: 10px;">Confirmar Reserva</button>
-            </form>
-        </div>
-        {% else %}
-        <p style="text-align: center; margin: 30px 0;">O seu carrinho está vazio.</p>
-        <div style="text-align: center;">
-            <a href="{{ url_for('catalogo') }}" class="btn">Voltar ao Catálogo</a>
-        </div>
-        {% endif %}
+            <!-- Endereço Completo -->
+            <label style="display: block; margin-top: 10px; font-weight: bold;">Endereço Completo de Entrega:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Rua, Número, Bairro, Cidade - UF" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
+
+            <!-- Forma de Pagamento -->
+            <label style="display: block; margin-top: 10px; font-weight: bold;">Forma de Pagamento:</label>
+            <select id="forma-pagamento" name="pagamento" onchange="verificarPagamento(this.value)" style="width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box;" required>
+                <option value="">Selecione...</option>
+                <option value="Pix">Pix</option>
+                <option value="Cartão">Cartão</option>
+                <option value="Dinheiro">Dinheiro</option>
+            </select>
+
+            <!-- Área que exibe a foto do QR Code do Pix caso o usuário escolha Pix -->
+            <div id="area-pix">
+                <p><strong>Escaneie o QR Code abaixo para pagar com Pix:</strong></p>
+                <!-- Exemplo de imagem de QR Code (você pode substituir pelo link da imagem de vocês) -->
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=OperaRecordsPixFicticio" alt="QR Code Pix">
+                <p style="font-size: 12px; color: #666; margin-top: 5px;">Chave Pix: operarecords@email.com</p>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%; margin-top: 20px; padding: 12px; font-weight: bold;">Confirmar Reserva</button>
+        </form>
     </div>
 
-    <!-- Script para exibir o QR Code do Pix dinamicamente -->
+    <!-- Scripts JavaScript -->
     <script>
-        function mostrarQrCode() {
-            var select = document.getElementById("forma-pagamento");
-            var qrDiv = document.getElementById("qr-code-container");
-            if (select.value === "Pix") {
-                qrDiv.style.display = "block";
+        // Função para buscar o CEP e preencher o endereço
+        function buscarLocalizacao(valorCep) {
+            const cepLimpo = valorCep.replace(/\D/g, '');
+            const enderecoInput = document.getElementById('endereco');
+            const divLocalizacao = document.getElementById('resultado-localizacao');
+            const textoLocalizacao = document.getElementById('texto-localizacao');
+
+            if (cepLimpo.length === 8) {
+                divLocalizacao.style.display = "block";
+                textoLocalizacao.innerText = "Buscando localização...";
+                enderecoInput.value = "Buscando endereço...";
+
+                const url = `https://viacep.com.br/ws/${cepLimpo}/json/`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(dados => {
+                        if (!dados.erro) {
+                            textoLocalizacao.innerText = `${dados.localidade} - ${dados.uf} (${dados.bairro})`;
+                            enderecoInput.value = `${dados.logradouro}, Bairro: ${dados.bairro}, ${dados.localidade} - ${dados.uf} (CEP: ${dados.cep})`;
+                        } else {
+                            divLocalizacao.style.display = "block";
+                            textoLocalizacao.innerText = "CEP não encontrado.";
+                            enderecoInput.value = "";
+                        }
+                    })
+                    .catch(erro => {
+                        console.error("Erro ao buscar CEP:", erro);
+                        divLocalizacao.style.display = "block";
+                        textoLocalizacao.innerText = "Erro ao buscar os dados.";
+                        enderecoInput.value = "";
+                    });
             } else {
-                qrDiv.style.display = "none";
+                divLocalizacao.style.display = "none";
+                enderecoInput.value = "";
+            }
+        }
+
+        // Função para mostrar ou esconder o QR Code do Pix dependendo da escolha
+        function verificarPagamento(opcao) {
+            const areaPix = document.getElementById('area-pix');
+            if (opcao === "Pix") {
+                areaPix.style.display = "block";
+            } else {
+                areaPix.style.display = "none";
             }
         }
     </script>
