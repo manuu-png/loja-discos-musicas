@@ -13,33 +13,33 @@ CAPAS_DISCOS = {
     'There Is a Light That Never Goes Out': 'https://e.snmc.io/i/600/w/d3844354372312f6e84e75dad1380cc4/14780388/The%20Smiths%20-%20The%20Queen%20Is%20Dead%2C%20Cover%20art.webp',
     "Don't Let Me Down": 'https://e.snmc.io/i/600/w/8bb7f1adb1dd815246336a9d460693d8/11462750/The%20Beatles%20-%20Let%20It%20Be___%20Naked%2C%20Cover%20art.webp',
     'Wonderwall': 'https://e.snmc.io/i/600/w/b50cc50216ed09a729cc0cdf730f37b6/13246079/Oasis%20-%20(Whats%20the%20Story)%20Morning%20Glory%3F%2C%20Cover%20art.webp',
-    'Under Pressure': 'https://upload.wikimedia.org/wikipedia/en/3/3c/Queen_Hot_Space.png',  # Corrigido (.space.jpg -> .png)
-    'I Thought I Saw Your Face Today': ' https://e.snmc.io/i/600/w/a633633bbe6ded3bbec6e5ab7728318b/11361882/She%20%26%20Him%20-%20Volume%20One%2C%20Cover%20art.webp ',
-    'Forget Her': ' https://cdn.sonemic.net/i/600/w/7409d01a8c0cdf51e8b22fd5d055196a/7027387/jeff-buckley-grace-cover-art.jpg ',
-    'Every Breath You Take': ' https://e.snmc.io/i/600/w/b9094b1e9af09bbd4589232d1afd0338/6576413/The%20Police%20-%20Synchronicity%2C%20Cover%20art.webp ',
-    'Half a Person': ' https://e.snmc.io/i/600/w/c9c371eaa8d9d50f78c77261fccaeab2/10758251/The%20Smiths%20-%20Louder%20Than%20Bombs%2C%20Cover%20art.webp ',
-    'Oh! Darling': ' https://e.snmc.io/i/600/w/5bb35099a69ff9f43e389a683b568a64/10910535/The%20Beatles%20-%201%2C%20Cover%20art.webp ',
-    'Hey Jude': ' https://e.snmc.io/i/600/w/5bb35099a69ff9f43e389a683b568a64/10910535/The%20Beatles%20-%201%2C%20Cover%20art.webp ',  # Substituído por SVG oficial válido do álbum 1
+    'Under Pressure': 'https://upload.wikimedia.org/wikipedia/en/3/3c/Queen_Hot_Space.png',
+    'I Thought I Saw Your Face Today': 'https://e.snmc.io/i/600/w/a633633bbe6ded3bbec6e5ab7728318b/11361882/She%20%26%20Him%20-%20Volume%20One%2C%20Cover%20art.webp',
+    'Forget Her': 'https://cdn.sonemic.net/i/600/w/7409d01a8c0cdf51e8b22fd5d055196a/7027387/jeff-buckley-grace-cover-art.jpg',
+    'Every Breath You Take': 'https://e.snmc.io/i/600/w/b9094b1e9af09bbd4589232d1afd0338/6576413/The%20Police%20-%20Synchronicity%2C%20Cover%20art.webp',
+    'Half a Person': 'https://e.snmc.io/i/600/w/c9c371eaa8d9d50f78c77261fccaeab2/10758251/The%20Smiths%20-%20Louder%20Than%20Bombs%2C%20Cover%20art.webp',
+    'Oh! Darling': 'https://e.snmc.io/i/600/w/5bb35099a69ff9f43e389a683b568a64/10910535/The%20Beatles%20-%201%2C%20Cover%20art.webp',
+    'Hey Jude': 'https://e.snmc.io/i/600/w/5bb35099a69ff9f43e389a683b568a64/10910535/The%20Beatles%20-%201%2C%20Cover%20art.webp',
 
     # Rock Metal
-    'Kickstart My Heart': ' https://e.snmc.io/i/600/w/d5f5b285e3d522841da3448c8798a7b0/13243854/M%C3%B6tley%20Cr%C3%BCe%20-%20Dr_%20Feelgood%2C%20Cover%20art.webp ',
-    'Paradise City': ' https://e.snmc.io/i/600/w/039a716a80dab8af32de9b6dcd3fb820/1212432/Guns%20n%20Roses%20-%20Live%20Era%20''93%2C%20Cover%20art.webp ',
-    'Lithium': ' https://e.snmc.io/i/600/w/9897668139794df98998dbb82997ba94/7748503/Nirvana%20-%20From%20the%20Muddy%20Banks%20of%20the%20Wishkah%2C%20Cover%20art.webp ',
-    'Master of Puppets': ' https://cdn.sonemic.net/i/600/w/280060a11fb6a67d6ac86d54f2e83cc6/3986151/metallica-master-of-puppets-Cover-Art.jpg ',
-    'Back in Black': ' https://cdn.sonemic.net/i/600/w/d1283369d34e034a87a9303c93794fc4/14309818/ac_dc-girls-got-rhythm-t_n_t-cover-art.jpg ',
-    'Change (In the House of Flies)': ' https://cdn.sonemic.net/i/150/w/119748a8aa656a0f10ec564132c98700/5146207',
-    "Sweet Child O' Mine": ' https://e.snmc.io/i/600/w/039a716a80dab8af32de9b6dcd3fb820/1212432/Guns%20n%20Roses%20-%20Live%20Era%20''93%2C%20Cover%20art.webp ',
-    'Enter Sandman': ' https://cdn.sonemic.net/i/600/w/282d2361441e9060d9c4b4e46732540c/6902962/metallica-enter-sandman-Cover-Art.jpg ',
-    'Heart-Shaped Box': ' https://cdn.sonemic.net/i/600/w/8447b62663fd973da77b0ddf9b06dc28/1631430/nirvana-heart-shaped-box-Cover-Art.jpg ',
-    'Highway to Hell': ' https://cdn.sonemic.net/i/600/w/1269aec9b07dc87753c72e8e19341536/1275719/ac_dc-highway-to-hell-Cover-Art.jpg ',
+    'Kickstart My Heart': 'https://e.snmc.io/i/600/w/d5f5b285e3d522841da3448c8798a7b0/13243854/M%C3%B6tley%20Cr%C3%BCe%20-%20Dr_%20Feelgood%2C%20Cover%20art.webp',
+    'Paradise City': 'https://e.snmc.io/i/600/w/039a716a80dab8af32de9b6dcd3fb820/1212432/Guns%20n%20Roses%20-%20Live%20Era%20''93%2C%20Cover%20art.webp',
+    'Lithium': 'https://e.snmc.io/i/600/w/9897668139794df98998dbb82997ba94/7748503/Nirvana%20-%20From%20the%20Muddy%20Banks%20of%20the%20Wishkah%2C%20Cover%20art.webp',
+    'Master of Puppets': 'https://cdn.sonemic.net/i/600/w/280060a11fb6a67d6ac86d54f2e83cc6/3986151/metallica-master-of-puppets-Cover-Art.jpg',
+    'Back in Black': 'https://cdn.sonemic.net/i/600/w/d1283369d34e034a87a9303c93794fc4/14309818/ac_dc-girls-got-rhythm-t_n_t-cover-art.jpg',
+    'Change (In the House of Flies)': 'https://cdn.sonemic.net/i/150/w/119748a8aa656a0f10ec564132c98700/5146207',
+    "Sweet Child O' Mine": 'https://e.snmc.io/i/600/w/039a716a80dab8af32de9b6dcd3fb820/1212432/Guns%20n%20Roses%20-%20Live%20Era%20''93%2C%20Cover%20art.webp',
+    'Enter Sandman': 'https://cdn.sonemic.net/i/600/w/282d2361441e9060d9c4b4e46732540c/6902962/metallica-enter-sandman-Cover-Art.jpg',
+    'Heart-Shaped Box': 'https://cdn.sonemic.net/i/600/w/8447b62663fd973da77b0ddf9b06dc28/1631430/nirvana-heart-shaped-box-Cover-Art.jpg',
+    'Highway to Hell': 'https://cdn.sonemic.net/i/600/w/1269aec9b07dc87753c72e8e19341536/1275719/ac_dc-highway-to-hell-Cover-Art.jpg',
 
     # MPB
-    'Ainda Bem': ' https://e.snmc.io/i/600/w/08614152d937b3f5987d8ad89638707b/3926789/Marisa%20Monte%20-%20O%20que%20voc%C3%AA%20quer%20saber%20de%20verdade%2C%20Cover%20art.webp ',
-    'Baby - Gal costa': ' https://e.snmc.io/i/600/w/9e6cf2c2b36b84cd7e1ce51197f720fe/3089291/Gal%20Costa%20-%20Gal%20Costa%2C%20Cover%20art.webp ',
-    'Lança Perfume': ' https://cdn.sonemic.net/i/600/w/9cf7eb2c497a4a7bde96d43c95ee83d4/10988921/rita-lee-e-roberto-de-carvalho-rita-lee-e-roberto-de-carvalho-cover-art.jpg ',
-    'Oceano': ' https://e.snmc.io/i/600/w/ccb28e14f4940db6ac5a49ed9c86bee1/12176606/Djavan%20-%20Djavan%2C%20Cover%20art.webp ',
-    'Mas Que Nada': ' https://e.snmc.io/i/600/w/5c93523cabe48d0eb607590a276967f3/12319633/Jorge%20Ben%20-%20Samba%20esquema%20novo%2C%20Cover%20art.webp ',
-    'Velha Infância': ' https://e.snmc.io/i/600/w/1aad40671dc50aa01dbb873e09b76fd1/2138881/Tribalistas%20-%20Tribalistas%2C%20Cover%20art.webp ',
+    'Ainda Bem': 'https://e.snmc.io/i/600/w/08614152d937b3f5987d8ad89638707b/3926789/Marisa%20Monte%20-%20O%20que%20voc%C3%AA%20quer%20saber%20de%20verdade%2C%20Cover%20art.webp',
+    'Baby - Gal costa': 'https://e.snmc.io/i/600/w/9e6cf2c2b36b84cd7e1ce51197f720fe/3089291/Gal%20Costa%20-%20Gal%20Costa%2C%20Cover%20art.webp',
+    'Lança Perfume': 'https://cdn.sonemic.net/i/600/w/9cf7eb2c497a4a7bde96d43c95ee83d4/10988921/rita-lee-e-roberto-de-carvalho-rita-lee-e-roberto-de-carvalho-cover-art.jpg',
+    'Oceano': 'https://e.snmc.io/i/600/w/ccb28e14f4940db6ac5a49ed9c86bee1/12176606/Djavan%20-%20Djavan%2C%20Cover%20art.webp',
+    'Mas Que Nada': 'https://e.snmc.io/i/600/w/5c93523cabe48d0eb607590a276967f3/12319633/Jorge%20Ben%20-%20Samba%20esquema%20novo%2C%20Cover%20art.webp',
+    'Velha Infância': 'https://e.snmc.io/i/600/w/1aad40671dc50aa01dbb873e09b76fd1/2138881/Tribalistas%20-%20Tribalistas%2C%20Cover%20art.webp',
     'Beija Eu': 'https://e.snmc.io/i/600/w/e20b58f090bc64b66b9a05a7e1549041/2739771/Marisa%20Monte%20-%20Mais%2C%20Cover%20art.webp',
     'Lanterna dos Afogados': 'https://e.snmc.io/i/600/w/9e6cf2c2b36b84cd7e1ce51197f720fe/3089291/Gal%20Costa%20-%20Gal%20Costa%2C%20Cover%20art.webp',
     'Mania de Você': 'https://e.snmc.io/i/600/w/ab2f480d032995ae222afe87f3a6248d/10996825/Rita%20Lee%20-%20Rita%20Lee%2C%20Cover%20art.webp',
@@ -80,9 +80,13 @@ def login():
         senha = request.form['senha']
 
         conexao = obter_conexao()
+        if not conexao:
+            return "Erro ao conectar com o banco de dados Neon.", 500
+
         cursor = conexao.cursor()
         cursor.execute("SELECT id_usuario, nome, email FROM usuarios WHERE email = %s AND senha = %s", (email, senha))
         usuario = cursor.fetchone()
+        conexao.commit()
         cursor.close()
         conexao.close()
 
@@ -104,6 +108,9 @@ def cadastro():
         senha = request.form['senha']
 
         conexao = obter_conexao()
+        if not conexao:
+            return "Erro ao conectar com o banco de dados Neon.", 500
+
         cursor = conexao.cursor()
         cursor.execute("INSERT INTO usuarios (nome, email, senha) VALUES (%s, %s, %s)", (nome, email, senha))
         conexao.commit()
@@ -121,13 +128,16 @@ def catalogo():
         return redirect(url_for('login'))
 
     conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
     cursor = conexao.cursor()
     cursor.execute("SELECT id_discos, genero, artistas, ano, nome_musica FROM discos ORDER BY id_discos")
     discos_raw = cursor.fetchall()
+    conexao.commit()
     cursor.close()
     conexao.close()
 
-    # Criamos uma versão do dicionário com as chaves em minúsculas e sem espaços nas pontas para facilitar a busca
     capas_normalizadas = {k.strip().lower(): v for k, v in CAPAS_DISCOS.items()}
 
     random.seed(42)
@@ -135,7 +145,6 @@ def catalogo():
     for d in discos_raw:
         preco = round(random.uniform(180.00, 200.00), 2)
 
-        # Pega o nome da música do banco e normaliza para comparar com segurança
         nome_musica_db = str(d[4]).strip().lower() if d[4] else ""
         imagem_url = capas_normalizadas.get(nome_musica_db, CAPA_PADRAO)
 
@@ -158,9 +167,13 @@ def artistas():
         return redirect(url_for('login'))
 
     conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
     cursor = conexao.cursor()
     cursor.execute("SELECT id_artistas, nome, idade FROM artistas ORDER BY nome")
     lista_artistas = cursor.fetchall()
+    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -173,9 +186,13 @@ def generos():
         return redirect(url_for('login'))
 
     conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
     cursor = conexao.cursor()
     cursor.execute("SELECT id_generos, nome, qtde_discos FROM generos ORDER BY nome")
     lista_generos = cursor.fetchall()
+    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -204,9 +221,13 @@ def ver_carrinho():
     itens_carrinho = carrinhos.get(usuario_id, {})
 
     conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
     cursor = conexao.cursor()
     cursor.execute("SELECT id_discos, genero, artistas, ano, nome_musica FROM discos")
     todos_discos = {d[0]: {'genero': d[1], 'artista': d[2], 'ano': d[3], 'musica': d[4]} for d in cursor.fetchall()}
+    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -267,6 +288,9 @@ def finalizar_carrinho():
     total_com_taxa = total_geral + 5.00
 
     conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
     cursor = conexao.cursor()
     cursor.execute(
         "INSERT INTO pedidos (id_usuario, quantidade, endereco, preco) VALUES (%s, %s, %s, %s)",
@@ -286,13 +310,20 @@ def pedidos():
         return redirect(url_for('login'))
 
     conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
     cursor = conexao.cursor()
     cursor.execute("SELECT quantidade, endereco, preco FROM pedidos WHERE id_usuario = %s", (session['id_usuario'],))
-    meus_pedidos = cursor.fetchall()
+    meus_pedidos_raw = cursor.fetchall()
+    conexao.commit()
     cursor.close()
     conexao.close()
 
+    # Garantindo conversão do valor numérico retornado do PostgreSQL
+    meus_pedidos = [(p[0], p[1], float(p[2])) for p in meus_pedidos_raw]
     total_gasto = sum(p[2] for p in meus_pedidos)
+
     return render_template('pedidos.html', pedidos=meus_pedidos, total_gasto=total_gasto, nome=session['nome'])
 
 
