@@ -3,14 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Opera Records - Sucesso</title>
+    <!-- Mantém o seu estilo original e adiciona os ícones e o visual do Materialize -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
-<body>
-    <div class="container" style="text-align: center; margin-top: 100px;">
-        <h1 style="color: #00b37e; margin-bottom: 20px;">🎵 Seu pedido foi reservado com sucesso! 🎵</h1>
-        <p style="margin-bottom: 25px; color: #a8a8b3;">O entregador vai levar ao seu endereço em no máximo **48 horas**. O pedido já foi anexado à sua conta na loja.</p>
-        <a href="{{ url_for('catalogo') }}" class="btn">Voltar ao Catálogo</a>
-        <a href="{{ url_for('pedidos') }}" class="btn" style="background-color: #29292e; margin-left: 10px;">Ver Meus Pedidos</a>
+<body class="grey lighten-4">
+    <div class="container" style="max-width: 600px; margin-top: 100px;">
+        <div class="card-panel white center-align z-depth-2" style="padding: 40px; border-radius: 12px;">
+            <i class="material-icons large green-text">check_circle</i>
+            <h4 style="font-family: serif; color: #4a284e; margin-top: 20px;">🎵 Seu pedido foi reservado com sucesso! 🎵</h4>
+            <p class="grey-text text-darken-2" style="margin: 20px 0; font-size: 16px;">
+                O entregador vai levar ao seu endereço em no máximo <strong>48 horas</strong>. O pedido já foi anexado à sua conta na loja.
+            </p>
+            <div style="margin-top: 30px;">
+                <a href="{{ url_for('catalogo') }}" class="waves-effect waves-light btn purple darken-3" style="margin-right: 10px;">
+                    <i class="material-icons left">store</i>Voltar ao Catálogo
+                </a>
+                <a href="{{ url_for('pedidos') }}" class="waves-effect waves-light btn grey darken-3">
+                    <i class="material-icons left">list_alt</i>Ver Meus Pedidos
+                </a>
+            </div>
+        </div>
     </div>
+
+    <!-- Script do Materialize para os efeitos dos botões -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
