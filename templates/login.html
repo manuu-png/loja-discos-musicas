@@ -3,28 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <title>Opera Records - Login</title>
-    <!-- Link dos ícones do Materialize (obrigatório para o disco aparecer) -->
+    <!-- Link dos ícones do Materialize -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Seu CSS original -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
     <style>
+        /* Container do disco + notas musicais */
+        .vinil-wrapper {
+            position: relative;
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Disco de vinil realista */
+        .vinil-bonito {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background:
+                radial-gradient(circle, var(--branco-suave) 0%, var(--branco-suave) 10%, var(--vinho-escuro) 11%, var(--vinho-escuro) 32%, #181818 33%, #2b2b2b 48%, #141414 63%, #262626 78%, #111 100%);
+            box-shadow: 0 3px 8px rgba(42, 22, 48, 0.35);
+            border: 2px solid var(--vinho-escuro);
+            position: relative;
+            animation: girarDisco 5s linear infinite;
+        }
+
+        /* Reflexo sutil no vinil */
+        .vinil-bonito::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.22) 0%, transparent 45%, rgba(255,255,255,0.12) 100%);
+        }
+
         @keyframes girarDisco {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .disco-animado {
-            font-size: 38px;
+
+        /* Notas musicais flutuando suavemente */
+        .nota-musical {
+            position: absolute;
             color: var(--vinho-escuro);
-            animation: girarDisco 6s linear infinite;
+            font-size: 16px !important;
+            opacity: 0;
+            pointer-events: none;
+            animation: flutuarNota 3.6s ease-in-out infinite;
+        }
+
+        .nota-1 {
+            top: 2px;
+            left: -6px;
+            animation-delay: 0s;
+        }
+
+        .nota-2 {
+            top: -4px;
+            right: -4px;
+            font-size: 14px !important;
+            animation-delay: 1.2s;
+        }
+
+        .nota-3 {
+            bottom: 6px;
+            left: -10px;
+            font-size: 13px !important;
+            animation-delay: 2.4s;
+        }
+
+        @keyframes flutuarNota {
+            0% {
+                opacity: 0;
+                transform: translate(0, 6px) scale(0.7) rotate(-10deg);
+            }
+            35% {
+                opacity: 0.85;
+            }
+            75% {
+                opacity: 0.45;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-8px, -22px) scale(1.1) rotate(12deg);
+            }
         }
     </style>
 </head>
 <body>
     <div class="container" style="max-width: 400px; margin-top: 100px;">
 
-        <!-- Título com o disco girando de enfeite -->
-        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
-            <i class="material-icons disco-animado">album</i>
+        <!-- Título com o disco de vinil realista e notas musicais -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 8px;">
+            <div class="vinil-wrapper">
+                <div class="vinil-bonito"></div>
+                <i class="material-icons nota-musical nota-1">music_note</i>
+                <i class="material-icons nota-musical nota-2">audiotrack</i>
+                <i class="material-icons nota-musical nota-3">music_note</i>
+            </div>
             <h1 style="margin: 0; font-size: 28px; color: var(--vinho-escuro);">Opera Records</h1>
         </div>
 
