@@ -3,15 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Opera Records - Login</title>
+    <!-- Link dos ícones do Materialize (obrigatório para o disco aparecer) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Seu CSS original -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <style>
+        @keyframes girarDisco {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .disco-animado {
+            font-size: 38px;
+            color: var(--vinho-escuro);
+            animation: girarDisco 6s linear infinite;
+        }
+    </style>
 </head>
 <body>
     <div class="container" style="max-width: 400px; margin-top: 100px;">
-        <h1>Opera Records</h1>
-        <p style="margin-bottom: 20px; color: #a8a8b3;">Faça login para entrar na loja</p>
+
+        <!-- Título com o disco girando de enfeite -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 5px;">
+            <i class="material-icons disco-animado">album</i>
+            <h1 style="margin: 0; font-size: 28px; color: var(--vinho-escuro);">Opera Records</h1>
+        </div>
+
+        <p style="margin-bottom: 20px; color: #666; text-align: center;">Entre na sua conta</p>
 
         {% if erro %}
-            <p style="color: #f75a68; margin-bottom: 10px;">{{ erro }}</p>
+        <p style="color: #f75a68; margin-bottom: 15px; text-align: center; font-weight: bold;">{{ erro }}</p>
         {% endif %}
 
         <form method="POST">
@@ -21,9 +41,12 @@
             <label>Senha:</label>
             <input type="password" name="senha" required>
 
-            <button type="submit">Entrar</button>
+            <button type="submit" style="width: 100%;">Entrar</button>
         </form>
-        <p style="margin-top: 15px; text-align: center;">Não tem uma conta? <a href="{{ url_for('cadastro') }}">Criar conta</a></p>
+
+        <p style="margin-top: 15px; text-align: center;">
+            Não tem uma conta? <a href="{{ url_for('cadastro') }}" style="color: var(--vinho-escuro); font-weight: bold;">Cadastre-se</a>
+        </p>
     </div>
 </body>
 </html>
