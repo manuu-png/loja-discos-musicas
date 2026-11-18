@@ -3,26 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <title>Opera Records - Cadastro</title>
+    <!-- Mantém o seu estilo original e adiciona os ícones e o visual do Materialize -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/estilo.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 </head>
-<body>
-    <div class="container" style="max-width: 400px; margin-top: 100px;">
-        <h1>Opera Records</h1>
-        <p style="margin-bottom: 20px; color: #a8a8b3;">Crie sua conta</p>
+<body class="grey lighten-4">
+    <div class="container" style="max-width: 450px; margin-top: 80px;">
+        <div class="card-panel white z-depth-2" style="border-radius: 12px; padding: 35px;">
+            <h3 class="center-align" style="font-family: serif; color: #4a284e; margin-bottom: 5px;">Opera Records</h3>
+            <p class="center-align grey-text" style="margin-bottom: 30px;">Crie sua conta</p>
 
-        <form method="POST">
-            <label>Nome:</label>
-            <input type="text" name="nome" required>
+            <form method="POST">
+                <div class="input-field">
+                    <i class="material-icons prefix">person</i>
+                    <input type="text" id="nome" name="nome" class="validate" required>
+                    <label for="nome">Nome</label>
+                </div>
 
-            <label>E-mail:</label>
-            <input type="email" name="email" required>
+                <div class="input-field">
+                    <i class="material-icons prefix">email</i>
+                    <input type="email" id="email" name="email" class="validate" required>
+                    <label for="email">E-mail</label>
+                </div>
 
-            <label>Senha:</label>
-            <input type="password" name="senha" required>
+                <div class="input-field">
+                    <i class="material-icons prefix">lock</i>
+                    <input type="password" id="senha" name="senha" class="validate" required>
+                    <label for="senha">Senha</label>
+                </div>
 
-            <button type="submit">Cadastrar e Entrar</button>
-        </form>
-        <p style="margin-top: 15px; text-align: center;">Já tem uma conta? <a href="{{ url_for('login') }}">Fazer login</a></p>
+                <button type="submit" class="waves-effect waves-light btn purple darken-3" style="width: 100%; margin-top: 20px; height: 45px;">
+                    Cadastrar e Entrar
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+
+            <div class="center-align" style="margin-top: 20px;">
+                <p class="grey-text text-darken-1">Já tem uma conta? <a href="{{ url_for('login') }}">Fazer login</a></p>
+            </div>
+        </div>
     </div>
+
+    <!-- Script do Materialize -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 </html>
