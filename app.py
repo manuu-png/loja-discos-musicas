@@ -1,17 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from conexao_db import obter_conexao
-from pathlib import Path
 from fpdf import FPDF
 from io import BytesIO
 import random
 
 app = Flask(__name__)
 app.secret_key = 'opera_records_secret_key'
-
-# Caminho para as fontes do Windows (ajuste se necessário)
-FONT_DIR = Path("c:/windows/fonts")
-FONT_NORMAL = FONT_DIR / "arial.ttf"
-FONT_BOLD = FONT_DIR / "arial.ttf"
 
 # Carrinho global temporário por ID de usuário
 carrinhos = {}
@@ -76,31 +70,25 @@ def criar_pdf(pedidos):
     pdf = FPDF(orientation="p", unit="mm", format="A4")
     pdf.add_page()
 
-    if not FONT_NORMAL.exists() or not FONT_BOLD.exists():
-        raise FileNotFoundError("Não foi possível encontrar as fontes no diretório informado.")
-
-    pdf.add_font(family="Arial", style="", fname=str(FONT_NORMAL))
-    pdf.add_font(family="Arial", style="B", fname=str(FONT_BOLD))
-
-    # Título do Relatório
-    pdf.set_font(family="Arial", style="B", size=18)
+    # Usa 'helvetica' embutida (funciona tanto no Windows quanto na Vercel/Linux)
+    pdf.set_font(family="helvetica", style="B", size=18)
     pdf.cell(w=0, h=15, text="Relatório de Pedidos - Opera Records", align="C", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(5)
 
     # Subtítulo (Quantidade de registros)
-    pdf.set_font(family="Arial", size=12)
+    pdf.set_font(family="helvetica", size=12)
     pdf.cell(w=0, h=10, text=f"Total de pedidos registrados: {len(pedidos)}", new_x="LMARGIN", new_y="NEXT")
     pdf.ln(5)
 
     # Cabeçalho da Tabela em Colunas
-    pdf.set_font(family="Arial", style="B", size=11)
+    pdf.set_font(family="helvetica", style="B", size=11)
     pdf.cell(w=20, h=10, text="Item", border=1, align="C")
     pdf.cell(w=30, h=10, text="Qtd", border=1, align="C")
     pdf.cell(w=95, h=10, text="Endereço / Pagamento", border=1, align="C")
     pdf.cell(w=45, h=10, text="Preço Total (R$)", border=1, align="C", new_x="LMARGIN", new_y="NEXT")
 
     # Registros da Tabela
-    pdf.set_font(family="Arial", size=10)
+    pdf.set_font(family="helvetica", size=10)
     for indice, p in enumerate(pedidos, start=1):
         pdf.cell(w=20, h=9, text=str(indice), border=1, align="C")
         pdf.cell(w=30, h=9, text=str(p[0]), border=1, align="C")
