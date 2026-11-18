@@ -29,12 +29,3 @@ Este projeto foi construído utilizando as seguintes tecnologias e bibliotecas:
 - **Banco de Dados Relacional** (Conexão via Neon DB)
 
 ---
-
-## 🚀 Como Executar o Projeto
-
-Siga os passos abaixo para rodar o projeto localmente na sua máquina:
-
-1. **Clone o repositório:**
-   ```bash
-   git clone [https://github.com/seu-usuario/opera-records.git](https://github.com/seu-usuario/opera-records.git)
-   cd opera-records
