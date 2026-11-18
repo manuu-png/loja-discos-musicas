@@ -104,7 +104,7 @@ def criar_pdf(pedidos):
     for indice, p in enumerate(pedidos, start=1):
         pdf.cell(w=20, h=9, text=str(indice), border=1, align="C")
         pdf.cell(w=30, h=9, text=str(p[0]), border=1, align="C")
-        pdf.cell(w=95, h=9, text=str(p[1])[:45], border=1, align="L") # Corta texto longo se necessário
+        pdf.cell(w=95, h=9, text=str(p[1])[:45], border=1, align="L")
         pdf.cell(w=45, h=9, text=f"R$ {float(p[2]):.2f}", border=1, align="R", new_x="LMARGIN", new_y="NEXT")
 
     pdf_bytes = pdf.output()
