@@ -1,39 +1,40 @@
-# loja-discos-musicas
-Projeto do Banco de Dados para a Gran Opera Records
-🎵 Opera Records — Loja de Discos de Vinil
+# 🎶 Opera Records
 
-O Opera Records é uma aplicação web desenvolvida em Python com Flask para uma loja virtual especializada em discos de vinil. O sistema permite que os clientes naveguem pelo catálogo, filtrem músicas e artistas, adicionem discos ao carrinho, calculem o endereço automaticamente via CEP e gerem relatórios de pedidos em PDF.
+> Loja virtual de discos de vinil desenvolvida em Python com Flask, com direito a catálogo interativo, carrinho de compras, cálculo de frete por CEP, simulação de pagamento via Pix e emissão de relatórios em PDF.
 
-✨ Funcionalidades
+---
 
-Autenticação de Usuários: Sistema completo de cadastro e login com controle de sessão.
+## ✨ Funcionalidades
 
-Catálogo Interativo: Exibição de discos com capas personalizadas, preços dinâmicos e barra de pesquisa em tempo real.
+- **Autenticação de Usuários:** Sistema de login e cadastro seguro.
+- **Catálogo Dinâmico:** Vitrine interativa de discos de vinil com capas e reprodução visual.
+- **Busca Avançada:** Filtro em tempo real por música, artista, gênero ou ano.
+- **Carrinho de Compras:** Adição de itens, cálculo automático de subtotal e taxa de entrega.
+- **Integração com CEP (ViaCEP):** Preenchimento automático do endereço ao digitar o CEP.
+- **Simulação de Pagamento:** Opções de Pix (com QR Code), Cartão e Dinheiro.
+- **Relatório em PDF:** Exportação do histórico de pedidos em formato PDF utilizando a biblioteca `fpdf`.
+- **Identidade Visual Personalizada:** Animações delicadas de discos de vinil e notas musicais.
 
-Exploração por Categorias: Páginas dedicadas para listagem de Artistas (com tabela interativa via DataTables) e Gêneros Musicais.
+---
 
-Carrinho de Compras: Adição de múltiplos discos, cálculo automático de subtotal e inclusão de taxa fixa de entrega (prazo de até 48 horas).
+## 🛠️ Tecnologias Utilizadas
 
-Checkout Inteligente:
+Este projeto foi construído utilizando as seguintes tecnologias e bibliotecas:
 
-Busca automática de endereço através da API ViaCEP.
+- **Python 3.x**
+- **Flask** (Microframework web)
+- **HTML5 & CSS3** (Estilização personalizada com fontes e animações)
+- **JavaScript** (Consumo da API ViaCEP e manipulação do DOM)
+- **FPDF** (Geração de relatórios em PDF)
+- **Banco de Dados Relacional** (Conexão via Neon DB)
 
-Opções de pagamento (Cartão, Dinheiro e Pix com geração automática de QR Code).
+---
 
-Histórico e Relatórios em PDF: Consulta de pedidos realizados e exportação de relatório detalhado em formato .pdf utilizando a biblioteca FPDF.
+## 🚀 Como Executar o Projeto
 
-🛠️ Tecnologias Utilizadas
+Siga os passos abaixo para rodar o projeto localmente na sua máquina:
 
-Back-end: Python 3, Flask
-
-Banco de Dados: PostgreSQL (hospedado no Neon)
-
-Bibliotecas e APIs Externas:
-
-Materialize CSS / Material Icons (ícones e elementos visuais)
-
-DataTables (paginação e busca na tabela de artistas)
-
-FPDF2 (geração de relatórios em PDF)
-
-ViaCEP API (preenchimento automático de endereço)
+1. **Clone o repositório:**
+   ```bash
+   git clone [https://github.com/seu-usuario/opera-records.git](https://github.com/seu-usuario/opera-records.git)
+   cd opera-records
