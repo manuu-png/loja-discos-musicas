@@ -39,7 +39,14 @@
                 {% endfor %}
             </tbody>
         </table>
+
         <h3 style="margin-top: 20px; text-align: right;">TOTAL GASTO: R$ {{ "%.2f"|format(total_gasto) }}</h3>
+
+        <!-- Botão para exportar os pedidos em PDF -->
+        <div style="margin-top: 25px; text-align: right;">
+            <a href="{{ url_for('exportar_pdf') }}" class="btn">Baixar Relatório em PDF</a>
+        </div>
+
         {% else %}
         <p>Você ainda não realizou nenhum pedido.</p>
         {% endif %}

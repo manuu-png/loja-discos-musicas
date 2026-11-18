@@ -1,15 +1,22 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from conexao_db import obter_conexao
+from pathlib import Path
+from fpdf import FPDF
+from io import BytesIO
 import random
 
 app = Flask(__name__)
 app.secret_key = 'opera_records_secret_key'
 
+# Caminho para as fontes do Windows (ajuste se necessário)
+FONT_DIR = Path("c:/windows/fonts")
+FONT_NORMAL = FONT_DIR / "arial.ttf"
+FONT_BOLD = FONT_DIR / "arial.ttf"
+
 # Carrinho global temporário por ID de usuário
 carrinhos = {}
 
 CAPAS_DISCOS = {
-    # Rock Clássico
     'There Is a Light That Never Goes Out': 'https://e.snmc.io/i/600/w/d3844354372312f6e84e75dad1380cc4/14780388/The%20Smiths%20-%20The%20Queen%20Is%20Dead%2C%20Cover%20art.webp',
     "Don't Let Me Down": 'https://e.snmc.io/i/600/w/8bb7f1adb1dd815246336a9d460693d8/11462750/The%20Beatles%20-%20Let%20It%20Be___%20Naked%2C%20Cover%20art.webp',
     'Wonderwall': 'https://e.snmc.io/i/600/w/b50cc50216ed09a729cc0cdf730f37b6/13246079/Oasis%20-%20(Whats%20the%20Story)%20Morning%20Glory%3F%2C%20Cover%20art.webp',
@@ -20,8 +27,6 @@ CAPAS_DISCOS = {
     'Half a Person': 'https://e.snmc.io/i/600/w/c9c371eaa8d9d50f78c77261fccaeab2/10758251/The%20Smiths%20-%20Louder%20Than%20Bombs%2C%20Cover%20art.webp',
     'Oh! Darling': 'https://e.snmc.io/i/600/w/5bb35099a69ff9f43e389a683b568a64/10910535/The%20Beatles%20-%201%2C%20Cover%20art.webp',
     'Hey Jude': 'https://e.snmc.io/i/600/w/5bb35099a69ff9f43e389a683b568a64/10910535/The%20Beatles%20-%201%2C%20Cover%20art.webp',
-
-    # Rock Metal
     'Kickstart My Heart': 'https://e.snmc.io/i/600/w/d5f5b285e3d522841da3448c8798a7b0/13243854/M%C3%B6tley%20Cr%C3%BCe%20-%20Dr_%20Feelgood%2C%20Cover%20art.webp',
     'Paradise City': 'https://e.snmc.io/i/600/w/039a716a80dab8af32de9b6dcd3fb820/1212432/Guns%20n%20Roses%20-%20Live%20Era%20''93%2C%20Cover%20art.webp',
     'Lithium': 'https://e.snmc.io/i/600/w/9897668139794df98998dbb82997ba94/7748503/Nirvana%20-%20From%20the%20Muddy%20Banks%20of%20the%20Wishkah%2C%20Cover%20art.webp',
@@ -32,8 +37,6 @@ CAPAS_DISCOS = {
     'Enter Sandman': 'https://cdn.sonemic.net/i/600/w/282d2361441e9060d9c4b4e46732540c/6902962/metallica-enter-sandman-Cover-Art.jpg',
     'Heart-Shaped Box': 'https://cdn.sonemic.net/i/600/w/8447b62663fd973da77b0ddf9b06dc28/1631430/nirvana-heart-shaped-box-Cover-Art.jpg',
     'Highway to Hell': 'https://cdn.sonemic.net/i/600/w/1269aec9b07dc87753c72e8e19341536/1275719/ac_dc-highway-to-hell-Cover-Art.jpg',
-
-    # MPB
     'Ainda Bem': 'https://e.snmc.io/i/600/w/08614152d937b3f5987d8ad89638707b/3926789/Marisa%20Monte%20-%20O%20que%20voc%C3%AA%20quer%20saber%20de%20verdade%2C%20Cover%20art.webp',
     'Baby - Gal costa': 'https://e.snmc.io/i/600/w/9e6cf2c2b36b84cd7e1ce51197f720fe/3089291/Gal%20Costa%20-%20Gal%20Costa%2C%20Cover%20art.webp',
     'Lança Perfume': 'https://cdn.sonemic.net/i/600/w/9cf7eb2c497a4a7bde96d43c95ee83d4/10988921/rita-lee-e-roberto-de-carvalho-rita-lee-e-roberto-de-carvalho-cover-art.jpg',
@@ -44,8 +47,6 @@ CAPAS_DISCOS = {
     'Lanterna dos Afogados': 'https://e.snmc.io/i/600/w/9e6cf2c2b36b84cd7e1ce51197f720fe/3089291/Gal%20Costa%20-%20Gal%20Costa%2C%20Cover%20art.webp',
     'Mania de Você': 'https://e.snmc.io/i/600/w/ab2f480d032995ae222afe87f3a6248d/10996825/Rita%20Lee%20-%20Rita%20Lee%2C%20Cover%20art.webp',
     'Taj Mahal': 'https://e.snmc.io/i/600/w/7878904bac16d76c7d19e1ac7481b808/8671710/Gil%20e%20Jorge%20-%20Ogum%20Xang%C3%B4%2C%20Cover%20art.webp',
-
-    # Pop
     'The Way I Loved You': 'https://upload.wikimedia.org/wikipedia/en/8/86/Taylor_Swift_-_Fearless.png',
     'Red': 'https://upload.wikimedia.org/wikipedia/en/e/e8/Taylor_Swift_-_Red.png',
     'Champagne Problems': 'https://e.snmc.io/i/600/w/8064a5c42ddb795c67f8c97e0b09e6b2/11472566/Taylor%20Swift%20-%20Evermore%2C%20Cover%20art.webp',
@@ -56,8 +57,6 @@ CAPAS_DISCOS = {
     'What Makes You Beautiful': 'https://e.snmc.io/i/600/w/12cb522433bdd9b0ae52f5d6ebc292d3/3918645/One%20Direction%20-%20Up%20All%20Night%2C%20Cover%20art.webp',
     'Baby': 'https://e.snmc.io/i/600/w/2b0b0e63730abde53d32b1a1ae44cb4f/2999424/Justin%20Bieber%20-%20My%20World%202_0%2C%20Cover%20art.webp',
     'Good 4 U': 'https://e.snmc.io/i/600/w/80ac9e81852c2ffa2c15bd12c5f88fdb/8937386/Olivia%20Rodrigo%20-%20Sour%2C%20Cover%20art.webp',
-
-    # K-Pop
     'Dynamite': 'https://cdn.sonemic.net/i/600/w/9b93f1246c6607e9261e44000e8da8e0/8402287/bts-dynamite-Cover-Art.jpg',
     'DDU-DU DDU-DU': 'https://cdn.sonemic.net/i/600/w/c7428525e58eccff4484d36013a8572e/7091047/blackpink-ddu-du-ddu-du-Cover-Art.png',
     'Hype Boy': 'https://e.snmc.io/i/600/w/20f94342f5dcf0328d6d180e0eb7230d/10143111/NewJeans%20-%20New%20Jeans%2C%20Cover%20art.webp',
@@ -73,6 +72,47 @@ CAPAS_DISCOS = {
 CAPA_PADRAO = 'https://upload.wikimedia.org/wikipedia/commons/b/b6/12in-Vinyl-LP-Record-Angle.jpg'
 
 
+def criar_pdf(pedidos):
+    pdf = FPDF(orientation="p", unit="mm", format="A4")
+    pdf.add_page()
+
+    if not FONT_NORMAL.exists() or not FONT_BOLD.exists():
+        raise FileNotFoundError("Não foi possível encontrar as fontes no diretório informado.")
+
+    pdf.add_font(family="Arial", style="", fname=str(FONT_NORMAL))
+    pdf.add_font(family="Arial", style="B", fname=str(FONT_BOLD))
+
+    # Título do Relatório
+    pdf.set_font(family="Arial", style="B", size=18)
+    pdf.cell(w=0, h=15, text="Relatório de Pedidos - Opera Records", align="C", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(5)
+
+    # Subtítulo (Quantidade de registros)
+    pdf.set_font(family="Arial", size=12)
+    pdf.cell(w=0, h=10, text=f"Total de pedidos registrados: {len(pedidos)}", new_x="LMARGIN", new_y="NEXT")
+    pdf.ln(5)
+
+    # Cabeçalho da Tabela em Colunas
+    pdf.set_font(family="Arial", style="B", size=11)
+    pdf.cell(w=20, h=10, text="Item", border=1, align="C")
+    pdf.cell(w=30, h=10, text="Qtd", border=1, align="C")
+    pdf.cell(w=95, h=10, text="Endereço / Pagamento", border=1, align="C")
+    pdf.cell(w=45, h=10, text="Preço Total (R$)", border=1, align="C", new_x="LMARGIN", new_y="NEXT")
+
+    # Registros da Tabela
+    pdf.set_font(family="Arial", size=10)
+    for indice, p in enumerate(pedidos, start=1):
+        pdf.cell(w=20, h=9, text=str(indice), border=1, align="C")
+        pdf.cell(w=30, h=9, text=str(p[0]), border=1, align="C")
+        pdf.cell(w=95, h=9, text=str(p[1])[:45], border=1, align="L") # Corta texto longo se necessário
+        pdf.cell(w=45, h=9, text=f"R$ {float(p[2]):.2f}", border=1, align="R", new_x="LMARGIN", new_y="NEXT")
+
+    pdf_bytes = pdf.output()
+    arquivo_pdf = BytesIO(pdf_bytes)
+    arquivo_pdf.seek(0)
+    return arquivo_pdf
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -86,7 +126,6 @@ def login():
         cursor = conexao.cursor()
         cursor.execute("SELECT id_usuario, nome, email FROM usuarios WHERE email = %s AND senha = %s", (email, senha))
         usuario = cursor.fetchone()
-        conexao.commit()
         cursor.close()
         conexao.close()
 
@@ -134,7 +173,6 @@ def catalogo():
     cursor = conexao.cursor()
     cursor.execute("SELECT id_discos, genero, artistas, ano, nome_musica FROM discos ORDER BY id_discos")
     discos_raw = cursor.fetchall()
-    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -144,18 +182,12 @@ def catalogo():
     discos = []
     for d in discos_raw:
         preco = round(random.uniform(180.00, 200.00), 2)
-
         nome_musica_db = str(d[4]).strip().lower() if d[4] else ""
         imagem_url = capas_normalizadas.get(nome_musica_db, CAPA_PADRAO)
 
         discos.append({
-            'id': d[0],
-            'genero': d[1],
-            'artista': d[2],
-            'ano': d[3],
-            'musica': d[4],
-            'preco': preco,
-            'imagem': imagem_url
+            'id': d[0], 'genero': d[1], 'artista': d[2],
+            'ano': d[3], 'musica': d[4], 'preco': preco, 'imagem': imagem_url
         })
 
     return render_template('catalogo.html', discos=discos, nome=session['nome'])
@@ -173,7 +205,6 @@ def artistas():
     cursor = conexao.cursor()
     cursor.execute("SELECT id_artistas, nome, idade FROM artistas ORDER BY nome")
     lista_artistas = cursor.fetchall()
-    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -192,7 +223,6 @@ def generos():
     cursor = conexao.cursor()
     cursor.execute("SELECT id_generos, nome, qtde_discos FROM generos ORDER BY nome")
     lista_generos = cursor.fetchall()
-    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -227,7 +257,6 @@ def ver_carrinho():
     cursor = conexao.cursor()
     cursor.execute("SELECT id_discos, genero, artistas, ano, nome_musica FROM discos")
     todos_discos = {d[0]: {'genero': d[1], 'artista': d[2], 'ano': d[3], 'musica': d[4]} for d in cursor.fetchall()}
-    conexao.commit()
     cursor.close()
     conexao.close()
 
@@ -243,22 +272,15 @@ def ver_carrinho():
             total_discos += subtotal
 
             carrinho_detalhado.append({
-                'id': id_disco,
-                'musica': d['musica'],
-                'artista': d['artista'],
-                'quantidade': qtd,
-                'preco': preco_unitario,
-                'subtotal': subtotal
+                'id': id_disco, 'musica': d['musica'], 'artista': d['artista'],
+                'quantidade': qtd, 'preco': preco_unitario, 'subtotal': subtotal
             })
 
     total_com_taxa = total_discos + (5.00 if carrinho_detalhado else 0.00)
 
     return render_template(
-        'carrinho.html',
-        carrinho=carrinho_detalhado,
-        total=total_discos,
-        total_com_taxa=total_com_taxa,
-        nome=session['nome']
+        'carrinho.html', carrinho=carrinho_detalhado,
+        total=total_discos, total_com_taxa=total_com_taxa, nome=session['nome']
     )
 
 
@@ -294,7 +316,7 @@ def finalizar_carrinho():
     cursor = conexao.cursor()
     cursor.execute(
         "INSERT INTO pedidos (id_usuario, quantidade, endereco, preco) VALUES (%s, %s, %s, %s)",
-        (usuario_id, total_qtd, f"{endereco} | Pagto: {pagamento} (Taxa entrega R$ 5,00)", total_com_taxa)
+        (usuario_id, total_qtd, f"{endereco} | Pagto: {pagamento}", total_com_taxa)
     )
     conexao.commit()
     cursor.close()
@@ -316,15 +338,37 @@ def pedidos():
     cursor = conexao.cursor()
     cursor.execute("SELECT quantidade, endereco, preco FROM pedidos WHERE id_usuario = %s", (session['id_usuario'],))
     meus_pedidos_raw = cursor.fetchall()
-    conexao.commit()
     cursor.close()
     conexao.close()
 
-    # Garantindo conversão do valor numérico retornado do PostgreSQL
     meus_pedidos = [(p[0], p[1], float(p[2])) for p in meus_pedidos_raw]
     total_gasto = sum(p[2] for p in meus_pedidos)
 
     return render_template('pedidos.html', pedidos=meus_pedidos, total_gasto=total_gasto, nome=session['nome'])
+
+
+@app.route('/exportar-pdf')
+def exportar_pdf():
+    if 'id_usuario' not in session:
+        return redirect(url_for('login'))
+
+    conexao = obter_conexao()
+    if not conexao:
+        return "Erro ao conectar com o banco de dados Neon.", 500
+
+    cursor = conexao.cursor()
+    cursor.execute("SELECT quantidade, endereco, preco FROM pedidos WHERE id_usuario = %s", (session['id_usuario'],))
+    meus_pedidos = cursor.fetchall()
+    cursor.close()
+    conexao.close()
+
+    pdf_buffer = criar_pdf(meus_pedidos)
+    return send_file(
+        pdf_buffer,
+        as_attachment=True,
+        download_name="relatorio_pedidos.pdf",
+        mimetype='application/pdf'
+    )
 
 
 @app.route('/logout')
